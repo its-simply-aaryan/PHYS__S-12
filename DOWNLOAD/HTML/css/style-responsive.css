@@ -354,5 +354,46 @@
   .grid-hover, li.grid-item, li.grid-item img{
     width:280px;
   }
+* Style all font awesome icons */
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+}
 
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+  background: #000000;
+  color: black;
+}
+
+/* Twitter */
+.fa-twitter {
+  background: #000000;
+  color: black;
+}
+/* Instagram */
+.fa-instagram {
+  background: #000000;
+  color: black;
+}
+/* LinkedIn */
+.fa-LinkedIn {
+  background: #000000;
+  color: black;
+}
+/* Tumblr */
+.fa-tubmblr {
+  background: #000000;
+  color: black;
+}
 }
