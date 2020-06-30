@@ -325,6 +325,13 @@ CONTENT
 **************************
 */
 
+<style>
+.note {
+  color: white;
+  padding: 20px;
+
+}
+
 .hero-image{
   position:relative; 
   width:100%; 
