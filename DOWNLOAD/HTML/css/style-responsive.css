@@ -307,6 +307,10 @@
   .one-column, .two-column{
     width:100%;
   }
+
+  .boxed {
+  border: 1px solid green ;
+]
   
   .contact-one, .contact-two, .contact-three{
     width:100%;
