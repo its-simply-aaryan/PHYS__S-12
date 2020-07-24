@@ -98,8 +98,16 @@
               <br/><br/>
 
               I started off by making a simple LED circuit. Here is the Arduino code I used: <br/>
-              <code></code>
+              <code>int led = 13; // the pin the LED is connected to
+void setup() {
+  pinMode(led, OUTPUT) // Declare the LED as an output
+}
 
+void loop() {
+  digitalWrite(led, HIGH) // Turn the LED on
+}</code>
+<br/><br/>
+<img src="img/20200723_022452.jpg" alt="Simple LED Circut" width="128" height="128">
             		            
 		            
 		            </p>
