@@ -97,7 +97,7 @@
               This reading focussed on various components of a circuit and the application of a multimeter in reference to that component. After the given table, the reading talks  about voltage, voltage dividers, the use of a multimeter and a breadboard and how to measure current using Ohm's law. 
               <br/><br/>
 
-              I started off by making a simple LED circuit. Here is the Arduino code I used: <br/><br/>
+              I started off by making a simple LED circuit. Building this circuit was not very challenging for me. We had a lot fo resistors but I used a 470 ohm resistor which worked perfectly well. Here is the Arduino code I used: <br/><br/>
               <pre>
 <font color="#00979c">int</font> <font color="#000000">led</font> <font color="#434f54">=</font> <font color="#000000">13</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; the pin the LED is connected to</font>
 <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
@@ -113,8 +113,60 @@
 <img src="img/20200723_022452.jpg" alt="Simple LED Circut" width="550" height="550">
             		            <br/>
                             Following is my TinkerCAD Diagram for this circuit:<br/>
-                            <img src="img/Screenshot (297).png" alt="Simple LED Circut" width="700" height="450">
+                            <img src="img/Screenshot (297).png" alt="Simple LED Circut" width="700" height="450"><br/><<br/>
 
+                            After this, we were to make a circuit for the "blink" program. This is the code I used:<br/><br/>
+                            <pre>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6"> &nbsp;Blink</font>
+<font color="#95a5a6"> &nbsp;Turns on an LED on for one second, then off for one second, repeatedly.</font>
+<font color="#95a5a6"> </font>
+<font color="#95a5a6"> &nbsp;Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO </font>
+<font color="#95a5a6"> &nbsp;it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to</font>
+<font color="#95a5a6"> &nbsp;the correct LED pin independent of which board is used.</font>
+<font color="#95a5a6"> &nbsp;If you want to know what pin the on-board LED is connected to on your Arduino model, check</font>
+<font color="#95a5a6"> &nbsp;the Technical Specs of your board &nbsp;at </font><u><font color="#95a5a6">https:&#47;&#47;www.arduino.cc&#47;en&#47;Main&#47;Products</font></u><font color="#95a5a6"></font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;This example code is in the public domain.</font>
+<font color="#95a5a6"> </font>
+<font color="#95a5a6"> &nbsp;modified 8 May 2014</font>
+<font color="#95a5a6"> &nbsp;by Scott Fitzgerald</font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;modified 2 Sep 2016</font>
+<font color="#95a5a6"> &nbsp;by Arturo Guadalupi</font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;modified 8 Sep 2016</font>
+<font color="#95a5a6"> &nbsp;by Colby Newman</font>
+<font color="#95a5a6">*&#47;</font>
+ 
+ 
+<font color="#434f54">&#47;&#47; the setup function runs once when you press reset or power the board</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; initialize digital pin LED_BUILTIN as an output.</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+ 
+<font color="#434f54">&#47;&#47; the loop function runs over and over again forever</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED on (HIGH is the voltage level)</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED off by making the voltage LOW</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
+ &nbsp;
+<font color="#000000">}</font>
+
+</pre><br/><br/>
+<video width="560" height="450" autoplay>
+  <source src="img/20200724_034400.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video><br/><br/>
+On playing around with the code a little bit, I figured out that I can change the delay time of the blink. I can also aadjust the brightness of the LED by including the following line in the void loop:<br/><br/>
+<pre>
+<font color="#d35400">analogWrite</font> <font color="#000000">(</font><font color="#000000">9</font><font color="#434f54">,</font><font color="#000000">230</font><font color="#000000">)</font><font color="#000000">;</font>
+
+
+</pre><br/><br/> The value in place of "230" could range from 0 to 255 in increasing order of brightness. At this point, it is also important to shift the wire to Pin 9 on the MetroBoard.
 		            
 		            </p>
 		          </div> 
