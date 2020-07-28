@@ -1,0 +1,299 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>PHYS_S-12 - Harvard Summer Program, 2020: Intorduction to Digital Fabrication. My project documentation for the course. Do check it out!</title>
+  <meta name="description" content="PHYS_S-12 - Harvard Summer Program, 2020: Intorduction to Digital Fabrication. My project documentation for the course. Do check it out ">
+  <meta name="keywords" content="PHYS_S-12, digital fabrication, project ideas, technology,  engineering, summer School, 2dcutting, design">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="author" content="PHYS_S-12.com">
+  <link rel="icon" type="image/png" href="img/logo.jpg" />
+
+<!--Style-->
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style-responsive.css">
+    
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
+</head>
+
+<body>
+
+<!--Preloader-->
+
+<div class="preloader" id="preloader">
+    <div class="item">
+      <div class="spinner">
+      </div>
+    </div>
+</div>
+
+<div class="opacity-nav">
+
+        <div class="menu-index" id="buttons" style="z-index:999999">
+        <i class="fa  fa-close"></i>
+        </div>
+
+    <ul class="menu-fullscreen">
+      <li><a class="ajax-link" href="index.html">Home</a></li>
+            <li><a class="ajax-link" href="about-us.html">About </a></li>
+      <li><a class="ajax-link" href="contact.html">Contact</a></li>
+    </ul>
+
+</div>
+
+
+  <!--Header-->
+  <header id="fullscreen">
+    
+      <div class="logo" id="full"><a class="ajax-link" href="index.html">PHYS S-12: Introduction to Digital Fabrication</a></div>
+      
+        <div class="menu-index" id="button">
+        <i class="fa fa-bars"></i>
+        </div>
+        
+  </header>
+
+  <div class="clear"></div>
+  
+  
+  </div>
+
+
+  <!--Content-->
+
+  <div class="content" id="ajax-content">
+
+
+        <div class="text-intro">
+                    
+	          <div class="one-column">
+	          
+	            <h1>Electronic Output Devices</h1>
+	            <p>Output Devices, Buzzers, LED Strips</p>
+	            
+	          </div>
+
+
+		          <div class="two-column">
+		            <p>
+              OUTPUT DEVICES<br/><br/>
+
+              This class was about electronic Output Devices. The class reading today was fairly simple - it was about different output devices including LED's, Laser Pointers, DC Motors, Stepper Motors, Servomoters and much more. Today we focussed more on Sound production using a buzzer.  <br/>
+              <a href="https://roberthart56.github.io/SCFAB/SC_lab/Output_Devices/output.html">Here</a> is a link to the class reading on Output Devices.
+              <br/><br/>
+               
+              ELECTRONICS AND TEST EQUIPPMENT<br/><br/>
+               
+              <a href="https://roberthart56.github.io/SCFAB/SC_lab/Electronics/electronics_basics/electronic_basics.html">Here</a> is a link to the page on Electronics Basics.<br/>
+              This reading focussed on various components of a circuit and the application of a multimeter in reference to that component. After the given table, the reading talks  about voltage, voltage dividers, the use of a multimeter and a breadboard and how to measure current using Ohm's law. 
+              <br/><br/>
+
+              I started off by making a simple LED circuit. Building this circuit was not very challenging for me. We had a lot fo resistors but I used a 470 ohm resistor which worked perfectly well. Here is the Arduino code I used: <br/><br/>
+              <pre>
+<font color="#00979c">int</font> <font color="#000000">led</font> <font color="#434f54">=</font> <font color="#000000">13</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; the pin the LED is connected to</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">led</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font> <font color="#434f54">&#47;&#47; Declare the LED as an output</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">led</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font> <font color="#434f54">&#47;&#47; Turn the LED on</font>
+<font color="#000000">}</font>
+
+</pre>
+<br/><br/>
+<img src="img/20200723_022452.jpg" alt="Simple LED Circut" width="550" height="550">
+            		            <br/><br/>
+                            Following is my TinkerCAD Diagram for this circuit:<br/><br/>
+                            <img src="img/Screenshot (297).png" alt="Simple LED Circut" width="700" height="450"><br/><br/>
+
+                            After this, we were to make a circuit for the "blink" program. This is the code I used:<br/><br/>
+                            <pre>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6"> &nbsp;Blink</font>
+<font color="#95a5a6"> &nbsp;Turns on an LED on for one second, then off for one second, repeatedly.</font>
+<font color="#95a5a6"> </font>
+<font color="#95a5a6"> &nbsp;Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO </font>
+<font color="#95a5a6"> &nbsp;it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to</font>
+<font color="#95a5a6"> &nbsp;the correct LED pin independent of which board is used.</font>
+<font color="#95a5a6"> &nbsp;If you want to know what pin the on-board LED is connected to on your Arduino model, check</font>
+<font color="#95a5a6"> &nbsp;the Technical Specs of your board &nbsp;at </font><u><font color="#95a5a6">https:&#47;&#47;www.arduino.cc&#47;en&#47;Main&#47;Products</font></u><font color="#95a5a6"></font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;This example code is in the public domain.</font>
+<font color="#95a5a6"> </font>
+<font color="#95a5a6"> &nbsp;modified 8 May 2014</font>
+<font color="#95a5a6"> &nbsp;by Scott Fitzgerald</font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;modified 2 Sep 2016</font>
+<font color="#95a5a6"> &nbsp;by Arturo Guadalupi</font>
+<font color="#95a5a6"> &nbsp;</font>
+<font color="#95a5a6"> &nbsp;modified 8 Sep 2016</font>
+<font color="#95a5a6"> &nbsp;by Colby Newman</font>
+<font color="#95a5a6">*&#47;</font>
+ 
+ 
+<font color="#434f54">&#47;&#47; the setup function runs once when you press reset or power the board</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; initialize digital pin LED_BUILTIN as an output.</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+ 
+<font color="#434f54">&#47;&#47; the loop function runs over and over again forever</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED on (HIGH is the voltage level)</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED off by making the voltage LOW</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
+ &nbsp;
+<font color="#000000">}</font>
+
+</pre><br/><br/>
+<video width="560" height="450" controls>
+  <source src="img/20200724_034400.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video><br/><br/>
+On playing around with the code a little bit, I figured out that I can change the delay time of the blink. I can also aadjust the brightness of the LED by including the following line in the void loop:<br/><br/>
+<pre>
+<font color="#d35400">analogWrite</font> <font color="#000000">(</font><font color="#000000">9</font><font color="#434f54">,</font><font color="#000000">230</font><font color="#000000">)</font><font color="#000000">;</font>
+
+
+</pre><br/><br/> The value in place of "230" could range from 0 to 255 in increasing order of brightness. At this point, it is also important to shift the wire to Pin 9 on the MetroBoard.
+		            
+		            </p>
+		          </div> 
+              <h1>Readings & Documentation</h1>
+
+                <div class="note"style="background-color:black;color:white;padding:20px;">
+                    
+                    <p>This week's readings assignment was Chapter 8 of <a href="http://mars1980.github.io/resources/making_things_move.pdf">Making Things Move</a>. This reading taught me how I could use simple machines to convert plain rotary motion into more complex forms of motion.<br/>
+                      Cranks - This is basically a liver attached to a rotating shaft. A very good example of a crank is a sterring wheel.<br/>
+                      Following this, I learnt about cams and followers and different types of cams. These are used if I want two or more objects to move in an irregular periodic motion.<br/>
+                      The last component were linkages which are used to transfer a type of motion from one motor to another. All these applications were demonstrated in various projects mentioned therafter.<br/>
+                      This reading developed in me a curiosity to explore. I soon found myself oepning up old toys and unscrewing spare machine parts to examine these simple machines.
+
+                  </div>
+
+
+              <br/> <br/>
+              <div class="one-column">
+            
+              <h1>Assignment: Circuits</h1>
+              <p>Lab Section, Double Resistor Circuit, Potentiometer Circuit</p>
+              
+            </div>
+
+            <div class="two-column">
+                <p>
+              LAB SECTION <br/><br/>
+
+              During the lab section, we were  learning more about resistors and I decided to execute the first part of my assignment which was to use a voltage divider circuit. I used two 1k ohm resisors to divide the voltage. 
+              <br/><br/>
+
+                                          <img src="img/voltdib.jpg" alt="Double Resistor Circuit" width="700" height="450"><br/><br/>
+
+                                          After I had finished building this circuit, I used the multimeter to measure voltage. The voltage before the resistors was 3.3V, whcih is correct because my wire to the positive end was connected to 3.3V supply  on the MetroBoard. After the first resistor, the Voltage dropped to 1.65V, one half of the initial voltage. The voltage after the second resistor became 0V.<br/>
+After using the multimeter to measure the voltage, we were supposed to find the current using Ohm's Law. This was fairly simple for me because I had studied Ohm's law in both sophomore year and senior year. Moreover, the  <a href="https://roberthart56.github.io/SCFAB/SC_lab/Electronics/electronics_basics/electronic_basics.html">referred reading</a> gave me a quick recap. So I used Ohm's Law to calculate the current between the two resistors. The voltage there was 1.65V and I had used a 1000 ohm resistor, the current would be 1.65/1000 = 0.00165A. This was concluded using the formula V = IR.
+               
+              WEEKLY ASSIGNMENT<br/><br/>
+               
+              Our assignment for the week was to work through a fusion 360 tutorial and document our learning. The following are the video tutorials I used along with my learning from each of these tutorials.
+              <br/><br/> 
+
+             
+
+            <iframe width="700" height="450" src="https://www.youtube.com/embed/vVFYrBClkPc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              
+                <br/><br/>
+                This tutorial helped me change the standard units for all constructions, sketching different kinds of objects and more importantly using siple tools such as - trim, mirror, tanget and dimensions.
+               <br/><br/>
+
+               After this, I used the <a href="https://help.autodesk.com/view/fusion360/ENU/courses/AP-GET-STARTED-OVERVIEW">video lessons</a> provided by Autodesk to explore Fusion 360 further. These lessons were divided into 16 short video lessons. <br/>
+               The first video was a brief overview of the capabilities of Fusion 360 - including design, prototyping, animations, renderings and all possibilities along with it.
+
+               <br/><br/>
+
+              The second part of our assignment was to select atleast three components from the kit, measure them using callipers and model them in Fusion 360. We were to create an assembly of these components and document our work on this webpage. I unfortunately have not received my kit yet, which is why I have not modelled the components but I will have it done as soon as I receive my  kit.              
+                <br/><br/>
+              </div> </p>
+                 				  
+                <div class="clear"></div>   				  
+                 				        
+				        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+            </div>
+ 
+				        
+				        <img src="img/full/1.jpg" width="100%"><br/><br/><br/><br/>
+				        <img src="img/full/2.jpg" width="100%"><br/><br/><br/><br/>
+				        <img src="img/full/3.jpg" width="100%"><br/><br/><br/><br/>
+				        <img src="img/full/4.jpg" width="100%"><br/><br/><br/><br/>
+				        <img src="img/full/5.jpg" width="100%"><br/><br/><br/><br/>
+				        <img src="img/full/6.jpg" width="100%">
+        
+        `
+					        
+        
+    </div>
+
+
+
+  <!--Home Sidebar-->
+
+<div id="ajax-sidebar"></div>
+
+
+  <!--Footer-->
+
+ <footer>
+
+    <div class="footer-margin">
+      <div class="social-footer">
+        <a href="https://www.instagram.com/its_simply_aaryan/"><i class="fa fa-instagram"></i></a>
+        <a href="https://twitter.com/MahipalAaryan"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/in/aaryan-mahipal-8708631a6/"><i class="fa fa-LinkedIn"></i></a>
+        <a href="https://www.tumblr.com/blog/its-simply-aaryan"><i class="fa fa-tumblr"></i></a>
+      
+      </div>     
+      <div class="copyright">© Copyright 2020  All Rights Reserved.</div>
+      
+
+    
+    </div>
+
+
+  </footer>
+
+
+
+<!--Scripts-->
+
+  <script src="js/jquery.min.js"></script>
+	<script src="js/jquery.easing.min.js"></script>
+	<script src="js/modernizr.custom.42534.js" type="text/javascript"></script>
+  <script src="js/jquery.waitforimages.js" type="text/javascript"></script>
+  <script src="js/typed.js" type="text/javascript"></script>
+  <script src="js/masonry.pkgd.min.js" type="text/javascript"></script>  
+  <script src="js/imagesloaded.pkgd.min.js" type="text/javascript"></script>    
+  <script src="js/jquery.jkit.1.2.16.min.js"></script>
+ 
+  <script src="js/script.js" type="text/javascript"></script>
+  
+	<script>
+    $('#button, #buttons').on('click', function() {
+      $( ".opacity-nav" ).fadeToggle( "slow", "linear" );
+    // Animation complete.
+    });
+  </script>
+
+
+</body>
+</html>
