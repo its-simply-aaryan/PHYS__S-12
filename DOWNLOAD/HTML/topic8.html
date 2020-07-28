@@ -372,7 +372,39 @@ After using the multimeter to measure the voltage, we were supposed to find the 
                  				        
 				        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-            
+            <pre>
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Adafruit_NeoPixel</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+
+<font color="#5e6d03">#define</font> <font color="#000000">PIN</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">6</font> 
+<font color="#5e6d03">#define</font> <font color="#000000">NUMPIXELS</font> <font color="#000000">10</font> 
+<font color="#5e6d03">#define</font> <font color="#000000">DELAYVAL</font> <font color="#000000">500</font> <font color="#434f54">&#47;&#47; Time (in milliseconds) to pause between pixels</font>
+
+<b><font color="#d35400">Adafruit_NeoPixel</font></b> <font color="#000000">strip</font><font color="#000000">(</font><font color="#000000">NUMPIXELS</font><font color="#434f54">,</font> <font color="#000000">PIN</font><font color="#434f54">,</font> <font color="#d35400">NEO_GRB</font> <font color="#434f54">+</font> <font color="#d35400">NEO_KHZ800</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; INITIALIZE NeoPixel strip object (REQUIRED)</font>
+ &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">show</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Turn OFF all pixels ASAP</font>
+ &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">setBrightness</font><font color="#000000">(</font><font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Set BRIGHTNESS low to reduce draw (max = 255)</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">clear</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Set all pixel colors to &#39;off&#39;</font>
+
+ &nbsp;<font color="#434f54">&#47;&#47; The first NeoPixel in a strand is #0, second is 1, all the way up</font>
+ &nbsp;<font color="#434f54">&#47;&#47; to the count of pixels minus one.</font>
+ &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">NUMPIXELS</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> <font color="#000000">{</font> <font color="#434f54">&#47;&#47; For each pixel...</font>
+
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; strip.Color() takes RGB values, from 0,0,0 up to 255,255,255</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Here we&#39;re using a moderately bright green color:</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">setPixelColor</font><font color="#000000">(</font><font color="#000000">i</font><font color="#434f54">,</font> <font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">Color</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">150</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font><font color="#000000">1</font>
+
+ &nbsp;&nbsp;&nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">show</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; Send the updated pixel colors to the hardware.</font>
+
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">DELAYVAL</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Pause before next pass through loop</font>
+ &nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+
+</pre>
 
 
 
