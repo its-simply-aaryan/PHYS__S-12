@@ -166,11 +166,406 @@
 
 <br/><br/>
 
+ <div class="one-column">
+            
+              <h1>THE ALARM</h1>
+            </div>
+            <div class="two-column"></div>
+
+              <br/><br/>
+              <p>MY CODE<br/><br/>
+              <pre>
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;Adafruit_GFX.h&#34;</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;MCUFRIEND_kbv.h&#34;</font>
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><font color="#000000">TouchScreen</font><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font> 
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Process</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;TouchScreen.h&#34;</font> <font color="#434f54">&#47;&#47; only when you want to use touch screen </font>
+
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;Fonts&#47;FreeSans9pt7b.h&#34;</font> &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; when you want other fonts</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;Fonts&#47;FreeSans12pt7b.h&#34;</font> <font color="#434f54">&#47;&#47; when you want other fonts</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;Fonts&#47;FreeSerif12pt7b.h&#34;</font> <font color="#434f54">&#47;&#47; when you want other fonts</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;FreeDefaultFonts.h&#34;</font> <font color="#434f54">&#47;&#47; when you want other fonts </font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;SPI.h&#34;</font> &nbsp;<font color="#434f54">&#47;&#47; using sdcard for display bitmap image</font>
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;SD.h&#34;</font>
+<font color="#434f54">&#47;&#47; Functionality:</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;Sets alarm based on earliest event in google calendar.</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;Refresh button forces an update with google calendar.</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;Alarm is updated every hour.</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;Cancel button cancels a scheduled alarm and stops alarm checks for the next 24 hours. &nbsp;Cancel the cancel by clicking refresh.</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;After alarm is stopped, alarms are disabled for next 8 hours.</font>
+<font color="#434f54">&#47;&#47; &nbsp;&nbsp;Only meetings before noon will trigger the alarm.</font>
+
+<font color="#434f54">&#47;&#47; Temboo &amp; Google Calendar&#47;GMail configuration.</font>
+
+<font color="#434f54">&#47;&#47; Temboo account username:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TEMBOO_ACCOUNT</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;its-simply-aaryan&#34;</font>
+<font color="#434f54">&#47;&#47; Temboo account app name:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TEMBOO_APP</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;S.M.A.R.T. ALARM&#34;</font>
+<font color="#434f54">&#47;&#47; Temboo account app key:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TEMBOO_KEY</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;YOUR TEMBOO APPLICATION KEY&#34;</font>
+<font color="#434f54">&#47;&#47; Temboo Google calendar credential name:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CALENDAR_CREDENTIALS</font> &nbsp;<font color="#005c5f">&#34;GoogleCalendar&#34;</font>
+<font color="#434f54">&#47;&#47; Google calendar ID:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CALENDAR_ID</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;mahipalaaryan@gmail.com&#34;</font>
+<font color="#434f54">&#47;&#47; Temboo Gmail credential name:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">GMAIL_CREDENTIALS</font> &nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;GoogleMail&#34;</font>
+<font color="#434f54">&#47;&#47; Mail subject keyword to trigger alarm:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">GMAIL_ALARM_KEYWORD</font> &nbsp;<font color="#005c5f">&#34;WAKE UP&#34;</font>
+
+<font color="#434f54">&#47;&#47; Alarm configuration.</font>
+<font color="#434f54">&#47;&#47; Name of the alarm MP3.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_FILE</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;&#47;mnt&#47;sda1&#47;arduino&#47;www&#47;SmartAlarmClock&#47;Annoying_Alarm_Clock.mp3&#34;</font>
+<font color="#434f54">&#47;&#47; Options to specify when running madplay command.</font>
+<font color="#434f54">&#47;&#47; The --attenuate command controls the volume of the alarm (in decibels). &nbsp;A negative value will reduce the</font>
+<font color="#434f54">&#47;&#47; volume, and a positive value will increase the volume.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_OPTIONS</font> &nbsp;&nbsp;&nbsp;&nbsp;<font color="#005c5f">&#34;--attenuate=+20&#34;</font>
+<font color="#434f54">&#47;&#47; Minutes to wait between calendar refreshes:</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_REFRESH_MINS</font> &nbsp;<font color="#000000">60</font>
+<font color="#434f54">&#47;&#47; Meetings after this hour (0-23) will be ignored. &nbsp;Set to 24 to disable this behavior.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_LATEST_HOUR</font> &nbsp;&nbsp;<font color="#000000">24</font>
+<font color="#434f54">&#47;&#47; Amount of time before the first meeting to fire the alarm.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_BUFFER_MINS</font> &nbsp;&nbsp;<font color="#000000">60</font> 
+<font color="#434f54">&#47;&#47; Minutes to wait before checking for new wake up emails.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">ALARM_KEYWORD_MINS</font> &nbsp;<font color="#000000">60</font>
+
+<font color="#434f54">&#47;&#47; Touchscreen calibration.</font>
+<font color="#434f54">&#47;&#47; You don&#39;t need to change these values.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TS_MINX</font> <font color="#000000">140</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TS_MAXX</font> <font color="#000000">900</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TS_MINY</font> <font color="#000000">120</font>
+<font color="#5e6d03">#define</font> <font color="#000000">TS_MAXY</font> <font color="#000000">940</font>
+
+<font color="#434f54">&#47;&#47; Clock display configuration.</font>
+<font color="#434f54">&#47;&#47; You don&#39;t need to change these values.</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CLOCK_COLOR</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">CYAN</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CLOCK_CENTER_X</font> &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">MAX_X</font><font color="#434f54">&#47;</font><font color="#000000">2</font> <font color="#434f54">-</font> <font color="#000000">20</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CLOCK_CENTER_Y</font> &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">MAX_Y</font><font color="#434f54">&#47;</font><font color="#000000">4</font> <font color="#434f54">+</font> <font color="#000000">20</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CLOCK_RADIUS</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">100</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CLOCK_TICK_SIZE</font> &nbsp;&nbsp;&nbsp;<font color="#000000">10</font>
+<font color="#5e6d03">#define</font> <font color="#000000">REFRESH_X</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">230</font>
+<font color="#5e6d03">#define</font> <font color="#000000">REFRESH_Y</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">210</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CANCEL_X</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">140</font>
+<font color="#5e6d03">#define</font> <font color="#000000">CANCEL_Y</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">210</font>
+<font color="#5e6d03">#define</font> <font color="#000000">BUTTON_WIDTH</font> &nbsp;&nbsp;&nbsp;<font color="#000000">105</font>
+<font color="#5e6d03">#define</font> <font color="#000000">BUTTON_HEIGHT</font> &nbsp;&nbsp;<font color="#000000">50</font>
+
+<font color="#434f54">&#47;&#47; Internal state of the alarm clock.</font>
+<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">lastUpdate</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#d35400">time</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">;</font>
+<b><font color="#d35400">Process</font></b> <font color="#000000">alarmPlayback</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#000000">alarmNextCheck</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">alarmPlaying</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+<font color="#000000">TouchScreen</font> <font color="#000000">ts</font> <font color="#434f54">=</font> <font color="#000000">TouchScreen</font><font color="#000000">(</font><font color="#000000">A3</font><font color="#434f54">,</font> <font color="#000000">A2</font><font color="#434f54">,</font> <font color="#000000">A1</font><font color="#434f54">,</font> <font color="#000000">A0</font><font color="#434f54">,</font> <font color="#000000">300</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">mailLastSeen</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+
+<font color="#434f54">&#47;&#47; Setup function, called once to initialize alarm state.</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Start the bridge and serial port.</font>
+ &nbsp;<b><font color="#d35400">Bridge</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Initialize display and set orientation.</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">init</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">setDisplayDirect</font><font color="#000000">(</font><font color="#000000">UP2DOWN</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Display a loading message.</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#005c5f">&#34;LOADING...&#34;</font><font color="#434f54">,</font> <font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">10</font><font color="#434f54">,</font> <font color="#000000">10</font><font color="#434f54">,</font> <font color="#000000">3</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Update the time (stored as minute of the day, i.e. a value from 0 to 1440 (24*60)).</font>
+ &nbsp;<font color="#d35400">time</font> <font color="#434f54">=</font> <font color="#000000">get_time</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Get time of last seen mail with alarm keyword.</font>
+ &nbsp;<font color="#000000">mailLastSeen</font> <font color="#434f54">=</font> <font color="#000000">get_mail_lastseen</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Update next alarm time.</font>
+ &nbsp;<font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#000000">get_alarm</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw the display.</font>
+ &nbsp;<font color="#000000">draw_display</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">alarmTime</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Keep track of when the display was last updated.</font>
+ &nbsp;<font color="#000000">lastUpdate</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Loop function called continuousl after setup.</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Grab current milliseconds.</font>
+ &nbsp;<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">current</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; Update the clock after a minute has passed since last update.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#00979c">long</font><font color="#000000">(</font><font color="#000000">current</font> <font color="#434f54">-</font> <font color="#000000">lastUpdate</font><font color="#000000">)</font> <font color="#434f54">&gt;=</font> <font color="#000000">60000L</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Increase the time by a minute.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">time</font> <font color="#434f54">=</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Update the time every day at midnight to fix any drift.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#d35400">time</font> <font color="#434f54">==</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">time</font> <font color="#434f54">=</font> <font color="#000000">get_time</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Note there is the chance that a time update might move the time past an alarm or</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; alarm update. &nbsp;Fixing this is correctly is not easy without introducing more timestamp</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; manipulation, so it&#39;s left as an uncommon but known issue.</font>
+ &nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Sound alarm if wake up mail has been received.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#d35400">time</font> <font color="#434f54">%</font> <font color="#000000">ALARM_KEYWORD_MINS</font> <font color="#434f54">==</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">check_mail_alarm</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> 
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Update alarm time periodically.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#d35400">time</font> <font color="#434f54">==</font> <font color="#000000">alarmNextCheck</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#000000">get_alarm</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> 
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Start alarm if necessary.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#d35400">time</font> <font color="#434f54">==</font> <font color="#000000">alarmTime</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">alarm_start</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Update display.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">draw_display</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">alarmTime</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Remember last update time.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">lastUpdate</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; Check for touchscreen hit.</font>
+ &nbsp;<font color="#000000">TSPoint</font> <font color="#000000">p</font> <font color="#434f54">=</font> <font color="#000000">ts</font><font color="#434f54">.</font><font color="#000000">getPoint</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#434f54">=</font> <font color="#d35400">map</font><font color="#000000">(</font><font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font><font color="#434f54">,</font> <font color="#000000">TS_MINX</font><font color="#434f54">,</font> <font color="#000000">TS_MAXX</font><font color="#434f54">,</font> <font color="#000000">MAX_X</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font> <font color="#434f54">=</font> <font color="#d35400">map</font><font color="#000000">(</font><font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font><font color="#434f54">,</font> <font color="#000000">TS_MINY</font><font color="#434f54">,</font> <font color="#000000">TS_MAXY</font><font color="#434f54">,</font> <font color="#000000">MAX_Y</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; If the alarm is playing and the touchscreen is pressed anywhere, stop the alarm.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">z</font> <font color="#434f54">&gt;</font> <font color="#000000">ts</font><font color="#434f54">.</font><font color="#000000">pressureThreshhold</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">alarmPlaying</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Stop the alarm.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarm_stop</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> 
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Remove the current alarm and stop alarm checks for the next 8 hours.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmNextCheck</font> <font color="#434f54">=</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">8</font><font color="#434f54">*</font><font color="#000000">60</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Redraw the display.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">draw_display</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">alarmTime</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; Check for refresh button hit.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">z</font> <font color="#434f54">&gt;</font> <font color="#000000">ts</font><font color="#434f54">.</font><font color="#000000">pressureThreshhold</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#434f54">&gt;=</font> <font color="#000000">REFRESH_X</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#434f54">&lt;=</font> <font color="#000000">(</font><font color="#000000">REFRESH_X</font> <font color="#434f54">+</font> <font color="#000000">BUTTON_HEIGHT</font><font color="#000000">)</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font> <font color="#434f54">&gt;=</font> <font color="#000000">REFRESH_Y</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font> <font color="#434f54">&lt;=</font> <font color="#000000">(</font><font color="#000000">REFRESH_Y</font> <font color="#434f54">+</font> <font color="#000000">BUTTON_WIDTH</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Highlight the button so it&#39;s clear the refresh is happening.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">fillRectangle</font><font color="#000000">(</font><font color="#000000">REFRESH_X</font><font color="#434f54">,</font> <font color="#000000">REFRESH_Y</font><font color="#434f54">,</font> <font color="#000000">BUTTON_HEIGHT</font><font color="#434f54">,</font> <font color="#000000">BUTTON_WIDTH</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#005c5f">&#34;REFRSH&#34;</font><font color="#434f54">,</font> <font color="#000000">REFRESH_X</font><font color="#434f54">+</font><font color="#000000">30</font><font color="#434f54">,</font> <font color="#000000">REFRESH_Y</font><font color="#434f54">+</font><font color="#000000">5</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#434f54">,</font> <font color="#000000">BLACK</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Update time.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">time</font> <font color="#434f54">=</font> <font color="#000000">get_time</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Update alarm time.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#000000">get_alarm</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Check for any mail alarm.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">check_mail_alarm</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Redraw the display.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">draw_display</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">alarmTime</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; Check for cancel button hit.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">z</font> <font color="#434f54">&gt;</font> <font color="#000000">ts</font><font color="#434f54">.</font><font color="#000000">pressureThreshhold</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#434f54">&gt;=</font> <font color="#000000">CANCEL_X</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#434f54">&lt;=</font> <font color="#000000">(</font><font color="#000000">CANCEL_X</font> <font color="#434f54">+</font> <font color="#000000">BUTTON_HEIGHT</font><font color="#000000">)</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font> <font color="#434f54">&gt;=</font> <font color="#000000">CANCEL_Y</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">p</font><font color="#434f54">.</font><font color="#000000">y</font> <font color="#434f54">&lt;=</font> <font color="#000000">(</font><font color="#000000">CANCEL_Y</font> <font color="#434f54">+</font> <font color="#000000">BUTTON_WIDTH</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Disable the alarm.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmTime</font> <font color="#434f54">=</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Stop alarm updates for the next ~24 hours.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmNextCheck</font> <font color="#434f54">=</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Redraw the display.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">draw_display</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">alarmTime</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;
+ &nbsp;<font color="#434f54">&#47;&#47; Short delay to keep touchscreen checks responsive.</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Start playing alarm audio.</font>
+<font color="#00979c">void</font> <font color="#000000">alarm_start</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Kill the alarm if it&#39;s running.</font>
+ &nbsp;<font color="#000000">alarm_stop</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Start the alarm.</font>
+ &nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#005c5f">&#34;madplay&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#005c5f">&#34;-Qr&#34;</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Disable output of status and repeat audio continuously.</font>
+ &nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">ALARM_OPTIONS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">ALARM_FILE</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">runAsynchronously</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">alarmPlaying</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Stop playing alarm audio.</font>
+<font color="#00979c">void</font> <font color="#000000">alarm_stop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">running</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmPlayback</font><font color="#434f54">.</font><font color="#d35400">close</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarmPlaying</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Convert hour and minute to time string. &nbsp;String MUST be a 9 character buffer!</font>
+<font color="#00979c">void</font> <font color="#000000">time_to_string</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#d35400">time</font><font color="#434f54">,</font> <font color="#00979c">char</font><font color="#434f54">*</font> <font color="#000000">timeString</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">hour12</font><font color="#434f54">,</font> <font color="#000000">minute</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">bool</font> <font color="#000000">am</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">time_to_hour_minute</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">hour12</font><font color="#434f54">,</font> <font color="#000000">minute</font><font color="#434f54">,</font> <font color="#000000">am</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">8</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">7</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39;M&#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">6</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">am</font> <font color="#434f54">?</font> <font color="#00979c">&#39;A&#39;</font> <font color="#434f54">:</font> <font color="#00979c">&#39;P&#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">5</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39; &#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">4</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39;0&#39;</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">minute</font> <font color="#434f54">%</font> <font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">3</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39;0&#39;</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">minute</font> <font color="#434f54">&#47;</font> <font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39;:&#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#00979c">&#39;0&#39;</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">hour12</font> <font color="#434f54">%</font> <font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">hour12</font> <font color="#434f54">&gt;</font> <font color="#000000">9</font><font color="#000000">)</font> <font color="#434f54">?</font> <font color="#00979c">&#39;1&#39;</font> <font color="#434f54">:</font> <font color="#00979c">&#39; &#39;</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Add a specified number of minutes to the provided time and return the new time value (in minutes of the day).</font>
+<font color="#00979c">int</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#d35400">time</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">minutes</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">result</font> <font color="#434f54">=</font> <font color="#d35400">time</font> <font color="#434f54">+</font> <font color="#000000">minutes</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">result</font> <font color="#434f54">&lt;</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">1440</font> <font color="#434f54">-</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#434f54">-</font><font color="#000000">1</font><font color="#434f54">*</font><font color="#000000">result</font><font color="#000000">)</font> <font color="#434f54">%</font> <font color="#000000">1440</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#5e6d03">else</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">result</font> <font color="#434f54">%</font> <font color="#000000">1440</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Convert from hour (24 hour format) and minute to minutes in day.</font>
+<font color="#00979c">int</font> <font color="#000000">time_to_minutes</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">hour24</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">minute</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#5e6d03">return</font> <font color="#000000">hour24</font><font color="#434f54">*</font><font color="#000000">60</font><font color="#434f54">+</font><font color="#000000">minute</font><font color="#000000">;</font> 
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Convert from minutes in day to hour (12 hour format), minute, and AM&#47;PM.</font>
+<font color="#00979c">int</font> <font color="#000000">time_to_hour_minute</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#d35400">time</font><font color="#434f54">,</font> <font color="#00979c">int</font><font color="#434f54">&amp;</font> <font color="#000000">hour12</font><font color="#434f54">,</font> <font color="#00979c">int</font><font color="#434f54">&amp;</font> <font color="#000000">minute</font><font color="#434f54">,</font> <font color="#00979c">bool</font><font color="#434f54">&amp;</font> <font color="#000000">am</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">hour12</font> <font color="#434f54">=</font> <font color="#d35400">time</font> <font color="#434f54">&#47;</font> <font color="#000000">60</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">am</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">hour12</font> <font color="#434f54">&gt;</font> <font color="#000000">12</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">hour12</font> <font color="#434f54">-=</font> <font color="#000000">12</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">am</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#000000">minute</font> <font color="#434f54">=</font> <font color="#d35400">time</font> <font color="#434f54">%</font> <font color="#000000">60</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Run date command to get the current hour and minute from the Yun&#39;s Linux processor.</font>
+<font color="#00979c">int</font> <font color="#000000">get_time</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Process</font></b> <font color="#000000">date</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#005c5f">&#34;date&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#005c5f">&#34;+%H%M&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">run</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">hour24</font> <font color="#434f54">=</font> <font color="#000000">10</font> <font color="#434f54">*</font> <font color="#000000">(</font><font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">-</font> <font color="#00979c">&#39;0&#39;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">hour24</font> <font color="#434f54">+=</font> <font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">-</font> <font color="#00979c">&#39;0&#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">minute</font> <font color="#434f54">=</font> <font color="#000000">10</font> <font color="#434f54">*</font> <font color="#000000">(</font><font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">-</font> <font color="#00979c">&#39;0&#39;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">minute</font> <font color="#434f54">+=</font> <font color="#000000">date</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">-</font> <font color="#00979c">&#39;0&#39;</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">return</font> <font color="#000000">time_to_minutes</font><font color="#000000">(</font><font color="#000000">hour24</font><font color="#434f54">,</font> <font color="#000000">minute</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Run the find_alarm.py script to search google calendar for the first alarm in the next 24 hours.</font>
+<font color="#00979c">int</font> <font color="#000000">get_alarm</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Process</font></b> <font color="#000000">findAlarm</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#005c5f">&#34;python&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#005c5f">&#34;&#47;mnt&#47;sda1&#47;arduino&#47;www&#47;SmartAlarmClock&#47;find_alarm.py&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_ACCOUNT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_APP</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_KEY</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">CALENDAR_CREDENTIALS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">CALENDAR_ID</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">run</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Check if an alarm was found and parse the time.</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">alarm</font> <font color="#434f54">=</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">available</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&gt;=</font> <font color="#000000">2</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">alarmHour24</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font> 
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">alarmMinute</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">findAlarm</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarm</font> <font color="#434f54">=</font> <font color="#000000">time_to_minutes</font><font color="#000000">(</font><font color="#000000">alarmHour24</font><font color="#434f54">,</font> <font color="#000000">alarmMinute</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Only update alarm if it&#39;s earlier than the latest alarm hour.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">alarm</font> <font color="#434f54">&lt;</font> <font color="#000000">(</font><font color="#000000">ALARM_LATEST_HOUR</font><font color="#434f54">*</font><font color="#000000">60</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Adjust alarm based on buffer minutes.</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">alarm</font> <font color="#434f54">=</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#000000">alarm</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">ALARM_BUFFER_MINS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Alarm is too late in the day to fire.</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">alarm</font> <font color="#434f54">=</font> <font color="#434f54">-</font><font color="#000000">1</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#000000">alarmNextCheck</font> <font color="#434f54">=</font> <font color="#000000">time_add</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">ALARM_REFRESH_MINS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">return</font> <font color="#000000">alarm</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Run the check_mail.py script to check email for most recent unread message with keyword in the title.</font>
+<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">get_mail_lastseen</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Process</font></b> <font color="#000000">checkMail</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#005c5f">&#34;python&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#005c5f">&#34;&#47;mnt&#47;sda1&#47;arduino&#47;www&#47;SmartAlarmClock&#47;check_email.py&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_ACCOUNT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_APP</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">TEMBOO_KEY</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">GMAIL_CREDENTIALS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">addParameter</font><font color="#000000">(</font><font color="#000000">GMAIL_ALARM_KEYWORD</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">run</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Check if an alarm was found and parse the time.</font>
+ &nbsp;<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">lastseen</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Read unsigned long response from result.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">available</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&gt;=</font> <font color="#000000">4</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">lastseen</font> <font color="#434f54">|=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">unsigned</font> <font color="#00979c">long</font><font color="#000000">)</font><font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">24</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">lastseen</font> <font color="#434f54">|=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">unsigned</font> <font color="#00979c">long</font><font color="#000000">)</font><font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">16</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">lastseen</font> <font color="#434f54">|=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">unsigned</font> <font color="#00979c">long</font><font color="#000000">)</font><font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">lastseen</font> <font color="#434f54">|=</font> <font color="#000000">checkMail</font><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#5e6d03">return</font> <font color="#000000">lastseen</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Sound the alarm if an email has been received which contains the alarm keyword.</font>
+<font color="#00979c">void</font> <font color="#000000">check_mail_alarm</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">lastSeen</font> <font color="#434f54">=</font> <font color="#000000">get_mail_lastseen</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">lastSeen</font> <font color="#434f54">&gt;</font> <font color="#000000">mailLastSeen</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Found a new mail, sound the alarm!</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">alarm_start</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">mailLastSeen</font> <font color="#434f54">=</font> <font color="#000000">lastSeen</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font> 
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Draw the display for the specified time and alarm time.</font>
+<font color="#00979c">void</font> <font color="#000000">draw_display</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#d35400">time</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">alarmTime</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">paintScreenBlack</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">char</font> <font color="#000000">timeString</font><font color="#000000">[</font><font color="#000000">9</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw time text.</font>
+ &nbsp;<font color="#000000">time_to_string</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">timeString</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#000000">timeString</font><font color="#434f54">,</font> <font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">10</font><font color="#434f54">,</font> <font color="#000000">10</font><font color="#434f54">,</font> <font color="#000000">3</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw clock.</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#d35400">drawCircle</font><font color="#000000">(</font><font color="#000000">CLOCK_CENTER_X</font><font color="#434f54">,</font> <font color="#000000">CLOCK_CENTER_Y</font><font color="#434f54">,</font> <font color="#000000">CLOCK_RADIUS</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw hour ticks.</font>
+ &nbsp;<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font> <font color="#434f54">&lt;</font> <font color="#000000">12</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">i</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">draw_clock_angle</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">i</font> <font color="#434f54">&#47;</font> <font color="#000000">12.0</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#00979c">TWO_PI</font><font color="#434f54">,</font> <font color="#000000">CLOCK_RADIUS</font><font color="#434f54">-</font><font color="#000000">CLOCK_TICK_SIZE</font><font color="#434f54">,</font> <font color="#000000">CLOCK_RADIUS</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw hour hand.</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">hour12</font><font color="#434f54">,</font> <font color="#000000">minute</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">bool</font> <font color="#000000">am</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">time_to_hour_minute</font><font color="#000000">(</font><font color="#d35400">time</font><font color="#434f54">,</font> <font color="#000000">hour12</font><font color="#434f54">,</font> <font color="#000000">minute</font><font color="#434f54">,</font> <font color="#000000">am</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">draw_clock_angle</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">hour12</font> <font color="#434f54">&#47;</font> <font color="#000000">12.0</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#00979c">TWO_PI</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">minute</font> <font color="#434f54">&#47;</font> <font color="#000000">60.0</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#000000">(</font><font color="#00979c">TWO_PI</font> <font color="#434f54">&#47;</font> <font color="#000000">12.0</font><font color="#000000">)</font><font color="#000000">)</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">50</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw minute hand.</font>
+ &nbsp;<font color="#000000">draw_clock_angle</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">minute</font> <font color="#434f54">&#47;</font> <font color="#000000">60.0</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#00979c">TWO_PI</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">80</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw alarm time.</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">alarmTime</font> <font color="#434f54">&gt;=</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">time_to_string</font><font color="#000000">(</font><font color="#000000">alarmTime</font><font color="#434f54">,</font> <font color="#000000">timeString</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#005c5f">&#34;ALARM:&#34;</font><font color="#434f54">,</font> <font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">50</font><font color="#434f54">,</font> <font color="#000000">215</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#000000">timeString</font><font color="#434f54">,</font> <font color="#000000">MAX_X</font><font color="#434f54">-</font><font color="#000000">70</font><font color="#434f54">,</font> <font color="#000000">215</font><font color="#434f54">,</font> <font color="#000000">1</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Draw alarm cancel button.</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#005c5f">&#34;CANCEL&#34;</font><font color="#434f54">,</font> <font color="#000000">CANCEL_X</font><font color="#434f54">+</font><font color="#000000">30</font><font color="#434f54">,</font> <font color="#000000">CANCEL_Y</font><font color="#434f54">+</font><font color="#000000">5</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawRectangle</font><font color="#000000">(</font><font color="#000000">CANCEL_X</font><font color="#434f54">,</font> <font color="#000000">CANCEL_Y</font><font color="#434f54">,</font> <font color="#000000">BUTTON_HEIGHT</font><font color="#434f54">,</font> <font color="#000000">BUTTON_WIDTH</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Draw alarm refresh button.</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawString</font><font color="#000000">(</font><font color="#005c5f">&#34;REFRSH&#34;</font><font color="#434f54">,</font> <font color="#000000">REFRESH_X</font><font color="#434f54">+</font><font color="#000000">30</font><font color="#434f54">,</font> <font color="#000000">REFRESH_Y</font><font color="#434f54">+</font><font color="#000000">5</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#000000">drawRectangle</font><font color="#000000">(</font><font color="#000000">REFRESH_X</font><font color="#434f54">,</font> <font color="#000000">REFRESH_Y</font><font color="#434f54">,</font> <font color="#000000">BUTTON_HEIGHT</font><font color="#434f54">,</font> <font color="#000000">BUTTON_WIDTH</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#434f54">&#47;&#47; Draw segment of a line from the center of the clock outward at the specified angle and start&#47;end radius.</font>
+<font color="#00979c">void</font> <font color="#000000">draw_clock_angle</font><font color="#000000">(</font><font color="#00979c">float</font> <font color="#000000">angle</font><font color="#434f54">,</font> <font color="#00979c">float</font> <font color="#000000">startRadius</font><font color="#434f54">,</font> <font color="#00979c">float</font> <font color="#000000">endRadius</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">startX</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">startRadius</font><font color="#434f54">*</font><font color="#d35400">cos</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">CLOCK_CENTER_X</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">startY</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">startRadius</font><font color="#434f54">*</font><font color="#d35400">sin</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">CLOCK_CENTER_Y</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">endX</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">endRadius</font><font color="#434f54">*</font><font color="#d35400">cos</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">CLOCK_CENTER_X</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">endY</font> <font color="#434f54">=</font> <font color="#00979c">int</font><font color="#000000">(</font><font color="#000000">endRadius</font><font color="#434f54">*</font><font color="#d35400">sin</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">CLOCK_CENTER_Y</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">Tft</font><font color="#434f54">.</font><font color="#d35400">drawLine</font><font color="#000000">(</font><font color="#000000">startX</font><font color="#434f54">,</font> <font color="#000000">startY</font><font color="#434f54">,</font> <font color="#000000">endX</font><font color="#434f54">,</font> <font color="#000000">endY</font><font color="#434f54">,</font> <font color="#000000">CLOCK_COLOR</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+</pre>
+<br/><br/>
+
+                <iframe width="700" height="450" src="img/touch.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+            </div>
+
+
+
+             
+
+
 
 
 					        
         
-    </div>
+    
 
 
 
