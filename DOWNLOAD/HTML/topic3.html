@@ -205,23 +205,27 @@ After using the multimeter to measure the voltage, we were supposed to find the 
                
               WEEKLY ASSIGNMENT<br/><br/>
                
-              Our assignment for the week was to work through a fusion 360 tutorial and document our learning. The following are the video tutorials I used along with my learning from each of these tutorials.
-              <br/><br/> 
+              This week, we were tazsked with reading the Analog serials with a microcontroller. We were provided with a Adafruit Metro MO Express and I used that to Read my Analog serial. I made a very simple circuit using a potentiometer, which I  had first drafted on Tinkercad as I was not fully comfortable working with circuits. I connected the potentiometer to ground and 5V power supply. I also connected to A0 pin to send serial communications to my microcontroller. I could see the Analog readings on my serial monitor by running the "AnalogReadSerial" program. It was also really interesting to see the values shifting on turning the potentiometer. Here is my code for this circuit:<br/><br/>
 
-             
+              <pre>
 
-            <iframe width="700" height="450" src="https://www.youtube.com/embed/vVFYrBClkPc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              
-                <br/><br/>
-                This tutorial helped me change the standard units for all constructions, sketching different kinds of objects and more importantly using siple tools such as - trim, mirror, tanget and dimensions.
-               <br/><br/>
 
-               After this, I used the <a href="https://help.autodesk.com/view/fusion360/ENU/courses/AP-GET-STARTED-OVERVIEW">video lessons</a> provided by Autodesk to explore Fusion 360 further. These lessons were divided into 16 short video lessons. <br/>
-               The first video was a brief overview of the capabilities of Fusion 360 - including design, prototyping, animations, renderings and all possibilities along with it.
+<font color="#434f54">&#47;&#47; the setup routine runs once when you press reset:</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; initialize serial communication at 9600 bits per second:</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
 
-               <br/><br/>
+<font color="#434f54">&#47;&#47; the loop routine runs over and over again forever:</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; read the input on analog pin 0:</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">sensorValue</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">A0</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; print out the value you read:</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">sensorValue</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; delay in between reads for stability</font>
+<font color="#000000">}</font>
 
-              The second part of our assignment was to select atleast three components from the kit, measure them using callipers and model them in Fusion 360. We were to create an assembly of these components and document our work on this webpage. I unfortunately have not received my kit yet, which is why I have not modelled the components but I will have it done as soon as I receive my  kit.              
+</pre>
                 <br/><br/>
               </div> </p>
                  				  
