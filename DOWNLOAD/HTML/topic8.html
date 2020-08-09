@@ -363,11 +363,15 @@ Here is an image of my wiring:<br/><br>
 
                 <div class="note"style="background-color:black;color:white;padding:20px;">
                     
-                    <p>This week's readings assignment was Chapter 8 of <a href="http://mars1980.github.io/resources/making_things_move.pdf">Making Things Move</a>. This reading taught me how I could use simple machines to convert plain rotary motion into more complex forms of motion.<br/>
-                      Cranks - This is basically a liver attached to a rotating shaft. A very good example of a crank is a sterring wheel.<br/>
-                      Following this, I learnt about cams and followers and different types of cams. These are used if I want two or more objects to move in an irregular periodic motion.<br/>
-                      The last component were linkages which are used to transfer a type of motion from one motor to another. All these applications were demonstrated in various projects mentioned therafter.<br/>
-                      This reading developed in me a curiosity to explore. I soon found myself oepning up old toys and unscrewing spare machine parts to examine these simple machines.
+                    <p>We has four readings this week:<br/>
+                      Reading 1: <a href="https://learn.sparkfun.com/tutorials/serial-communication/all">Serial Communication</a><br/>
+                      This was a very resourceful article on serial communications and Common Pitfalls. I undoubtedly learnt a lot about wiring and hardware implementation in my circuits.<br/>
+                      Reading 2: <a href="https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi">Serial Peripheral Interface</a> <br/>
+                      This article was particularly very useful to me as my Final Project was to involve SPI vividly. Serial Peripheral Interface (SPI) is an interface bus commonly used to send data between microcontrollers and small peripherals such as shift registers, sensors, and SD cards. It uses separate clock and data lines, along with a select line to choose the device you wish to talk to. It provided me with an ideal solution to my problem.<br/>
+                      Reading 3: <a href="https://learn.sparkfun.com/tutorials/i2c">I2C Communication Portal</a><br/>
+                      I2C works on the master-slave principle that requires just two wires like an asynchronous serial. It offers the best of two worlds - SPI and UART Ports.<br/>
+                      Reading 4: <a href="https://lastminuteengineers.com/nrf24l01-arduino-wireless-communication/">Working of Wireless Module and Interface with Arduino</a><br/>
+                    This reading gave me an ideal case where I could help communicate between two or more arduinos in the most effective, inexpensive way. This could create new openings for my Final Project, however I could not find this part online and hence I had to work without it.</p>
 
                   </div>
 
@@ -375,14 +379,13 @@ Here is an image of my wiring:<br/><br>
               <br/> <br/>
               <div class="one-column">
             
-              <h1>Assignment: Circuits</h1>
-              <p>Lab Section, Double Resistor Circuit, Potentiometer Circuit</p>
-              
+              <h1>Assignment: Output Devices</h1>
+            
             </div>
 
             <div class="two-column">
                 <p>
-              LAB SECTION <br/><br/>
+              Output Devices: Exploration<br/><br/>
 
               During the lab section, we were  learning more about resistors and I decided to execute the first part of my assignment which was to use a voltage divider circuit. I used two 1k ohm resisors to divide the voltage. 
               <br/><br/>
@@ -392,25 +395,7 @@ Here is an image of my wiring:<br/><br>
                                           After I had finished building this circuit, I used the multimeter to measure voltage. The voltage before the resistors was 3.3V, whcih is correct because my wire to the positive end was connected to 3.3V supply  on the MetroBoard. After the first resistor, the Voltage dropped to 1.65V, one half of the initial voltage. The voltage after the second resistor became 0V.<br/>
 After using the multimeter to measure the voltage, we were supposed to find the current using Ohm's Law. This was fairly simple for me because I had studied Ohm's law in both sophomore year and senior year. Moreover, the  <a href="https://roberthart56.github.io/SCFAB/SC_lab/Electronics/electronics_basics/electronic_basics.html">referred reading</a> gave me a quick recap. So I used Ohm's Law to calculate the current between the two resistors. The voltage there was 1.65V and I had used a 1000 ohm resistor, the current would be 1.65/1000 = 0.00165A. This was concluded using the formula V = IR.
                
-              WEEKLY ASSIGNMENT<br/><br/>
-               
-              Our assignment for the week was to work through a fusion 360 tutorial and document our learning. The following are the video tutorials I used along with my learning from each of these tutorials.
-              <br/><br/> 
-
-             
-
-            <iframe width="700" height="450" src="https://www.youtube.com/embed/vVFYrBClkPc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               
-                <br/><br/>
-                This tutorial helped me change the standard units for all constructions, sketching different kinds of objects and more importantly using siple tools such as - trim, mirror, tanget and dimensions.
-               <br/><br/>
-
-               After this, I used the <a href="https://help.autodesk.com/view/fusion360/ENU/courses/AP-GET-STARTED-OVERVIEW">video lessons</a> provided by Autodesk to explore Fusion 360 further. These lessons were divided into 16 short video lessons. <br/>
-               The first video was a brief overview of the capabilities of Fusion 360 - including design, prototyping, animations, renderings and all possibilities along with it.
-
-               <br/><br/>
-
-              The second part of our assignment was to select atleast three components from the kit, measure them using callipers and model them in Fusion 360. We were to create an assembly of these components and document our work on this webpage. I unfortunately have not received my kit yet, which is why I have not modelled the components but I will have it done as soon as I receive my  kit.              
                 <br/><br/>
               </div> </p>
                  				  
@@ -418,39 +403,7 @@ After using the multimeter to measure the voltage, we were supposed to find the 
                  				        
 				        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-            <pre>
-<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Adafruit_NeoPixel</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
 
-<font color="#5e6d03">#define</font> <font color="#000000">PIN</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">6</font> 
-<font color="#5e6d03">#define</font> <font color="#000000">NUMPIXELS</font> <font color="#000000">10</font> 
-<font color="#5e6d03">#define</font> <font color="#000000">DELAYVAL</font> <font color="#000000">500</font> <font color="#434f54">&#47;&#47; Time (in milliseconds) to pause between pixels</font>
-
-<b><font color="#d35400">Adafruit_NeoPixel</font></b> <font color="#000000">strip</font><font color="#000000">(</font><font color="#000000">NUMPIXELS</font><font color="#434f54">,</font> <font color="#000000">PIN</font><font color="#434f54">,</font> <font color="#d35400">NEO_GRB</font> <font color="#434f54">+</font> <font color="#d35400">NEO_KHZ800</font><font color="#000000">)</font><font color="#000000">;</font>
-
-<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; INITIALIZE NeoPixel strip object (REQUIRED)</font>
- &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">show</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Turn OFF all pixels ASAP</font>
- &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">setBrightness</font><font color="#000000">(</font><font color="#000000">10</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Set BRIGHTNESS low to reduce draw (max = 255)</font>
-<font color="#000000">}</font>
-
-<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">clear</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Set all pixel colors to &#39;off&#39;</font>
-
- &nbsp;<font color="#434f54">&#47;&#47; The first NeoPixel in a strand is #0, second is 1, all the way up</font>
- &nbsp;<font color="#434f54">&#47;&#47; to the count of pixels minus one.</font>
- &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">NUMPIXELS</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> <font color="#000000">{</font> <font color="#434f54">&#47;&#47; For each pixel...</font>
-
- &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; strip.Color() takes RGB values, from 0,0,0 up to 255,255,255</font>
- &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Here we&#39;re using a moderately bright green color:</font>
- &nbsp;&nbsp;&nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">setPixelColor</font><font color="#000000">(</font><font color="#000000">i</font><font color="#434f54">,</font> <font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">Color</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">150</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font><font color="#000000">1</font>
-
- &nbsp;&nbsp;&nbsp;<font color="#000000">strip</font><font color="#434f54">.</font><font color="#d35400">show</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; Send the updated pixel colors to the hardware.</font>
-
- &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">DELAYVAL</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Pause before next pass through loop</font>
- &nbsp;<font color="#000000">}</font>
-<font color="#000000">}</font>
-
-</pre>
 
 
 
