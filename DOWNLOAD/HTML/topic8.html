@@ -312,8 +312,40 @@ Here is a video of my result:<br/><br/>
               During the class, I played with the buzzer by programming it with a few different tones. I also learnt that the range of these tones are from 32 to 2000. I ended up playing the  higher value tones all day to annoy my folks but this was a fun activity.<br/><br/>
 
               LED STRIP<br/><br/>
-              In breakout rooms, we were also assigned the task of lighting the first four LED's of the LED Strip using different colours.
+              In breakout rooms, we were also assigned the task of lighting the first four LED's of the LED Strip using different colours. Although I could not alter the LED strip according to different colours due to paucity of time, I did manage to make my LED strip work with my Arduino. Here is my end result:<br/><br/>
+              <video width="560" height="450" controls>
+  <source src="img/LED_Strip.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video><br/><br/>
 		            
+                SERVO MOTORS<br/><br/>
+                This was a fun tutorial as I was excited to explore Servo motors. <a href="https://nathanmelenbrink.github.io/intro-dig-fab/08_output/servo">Here</a> is a link to the tutorial on Servo motors.<br/>
+                I followed all tutorials but the most interesting one was controlling the servo motor using a potentiometer. Here is the code for the same:<br/><br/>
+                <pre>
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Servo</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+
+<b><font color="#d35400">Servo</font></b> <font color="#000000">myservo</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; create servo object to control a servo</font>
+
+<font color="#00979c">int</font> <font color="#000000">potpin</font> <font color="#434f54">=</font> <font color="#000000">A0</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; analog pin used to connect the potentiometer</font>
+<font color="#00979c">int</font> <font color="#000000">val</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; variable to read the value from the analog pin</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">myservo</font><font color="#434f54">.</font><font color="#d35400">attach</font><font color="#000000">(</font><font color="#000000">9</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; attaches the servo on pin 9 to the servo object</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#000000">val</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">potpin</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; reads the value of the potentiometer (value between 0 and 1023)</font>
+ &nbsp;<font color="#000000">val</font> <font color="#434f54">=</font> <font color="#d35400">map</font><font color="#000000">(</font><font color="#000000">val</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">1023</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">180</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; scale it to use it with the servo (value between 0 and 180)</font>
+ &nbsp;<font color="#000000">myservo</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">val</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; sets the servo position according to the scaled value</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">15</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; waits for the servo to get there</font>
+<font color="#000000">}</font>
+
+</pre><br/><br/>
+Here is a video documenting my end result:<br/><br/>
+<video width="560" height="450" controls>
+  <source src="img/servo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video><br/><br/>
 		            </p>
 		          </div> 
               <h1>Readings & Documentation</h1>
