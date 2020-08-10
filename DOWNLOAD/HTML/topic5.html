@@ -155,46 +155,30 @@
               <br/> <br/>
               <div class="one-column">
             
-              <h1>Assignment: Circuits</h1>
-              <p>Lab Section, Double Resistor Circuit, Potentiometer Circuit</p>
+              <h1>Assignment: Programmable Electronics</h1>
+              <p>Autodesk Fusion 360, 3D Modelling Parts for Final Project</p>
               
             </div>
 
             <div class="two-column">
                 <p>
-              LAB SECTION <br/><br/>
+              AUTODESK FUSION 360 <br/><br/>
 
-              During the lab section, we were  learning more about resistors and I decided to execute the first part of my assignment which was to use a voltage divider circuit. I used two 1k ohm resisors to divide the voltage. 
+               
               <br/><br/>
 
                                           <img src="img/voltdib.jpg" alt="Double Resistor Circuit" width="700" height="450"><br/><br/>
 
-                                          After I had finished building this circuit, I used the multimeter to measure voltage. The voltage before the resistors was 3.3V, whcih is correct because my wire to the positive end was connected to 3.3V supply  on the MetroBoard. After the first resistor, the Voltage dropped to 1.65V, one half of the initial voltage. The voltage after the second resistor became 0V.<br/>
-After using the multimeter to measure the voltage, we were supposed to find the current using Ohm's Law. This was fairly simple for me because I had studied Ohm's law in both sophomore year and senior year. Moreover, the  <a href="https://roberthart56.github.io/SCFAB/SC_lab/Electronics/electronics_basics/electronic_basics.html">referred reading</a> gave me a quick recap. So I used Ohm's Law to calculate the current between the two resistors. The voltage there was 1.65V and I had used a 1000 ohm resistor, the current would be 1.65/1000 = 0.00165A. This was concluded using the formula V = IR.
+                                          
                
-              WEEKLY ASSIGNMENT<br/><br/>
+              3D MODELLING PARTS FOR FINAL PROJECTS<br/><br/>
                
-              This week, we were tazsked with reading the Analog serials with a microcontroller. We were provided with a Adafruit Metro MO Express and I used that to Read my Analog serial. I made a very simple circuit using a potentiometer, which I  had first drafted on Tinkercad as I was not fully comfortable working with circuits. I connected the potentiometer to ground and 5V power supply. I also connected to A0 pin to send serial communications to my microcontroller. I could see the Analog readings on my serial monitor by running the "AnalogReadSerial" program. It was also really interesting to see the values shifting on turning the potentiometer. Here is my code for this circuit:<br/><br/>
+              Since dates for the final project were getting nearer, we were supposed to design and send our parts for 3D Printing. However, since I did not have access to a 3D printer and my final project wasn't going to include any printed parts, I decided to spend my time to figure out the Google Calender and Gmail trigger word API for my Alarm Clock. THis turned out to be a fun experimentation - I found a service called Temboo that would help me link my projects with Google Calander and other API's. Due to the paucity of time, I decided to stick to Google Calander and Gmail. If time permits, I would move on to adding Instagram and Facebook notifications to my project.<br/><br/>
 
               <pre>
 
 
-<font color="#434f54">&#47;&#47; the setup routine runs once when you press reset:</font>
-<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#434f54">&#47;&#47; initialize serial communication at 9600 bits per second:</font>
- &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
-<font color="#000000">}</font>
 
-<font color="#434f54">&#47;&#47; the loop routine runs over and over again forever:</font>
-<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#434f54">&#47;&#47; read the input on analog pin 0:</font>
- &nbsp;<font color="#00979c">int</font> <font color="#000000">sensorValue</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">A0</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;<font color="#434f54">&#47;&#47; print out the value you read:</font>
- &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">sensorValue</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; delay in between reads for stability</font>
-<font color="#000000">}</font>
-
-</pre>
                 <br/><br/>
               </div> </p>
                  				  
