@@ -77,97 +77,70 @@
                     
 	          <div class="one-column">
 	          
-	            <h1>Electronics & Tools</h1>
-	            <p>Introduction to Microcontrollers, Electronics and test equippment, Tinkercad Simulation</p>
+	            <h1>Programmable Electronics</h1>
+	            <p>Arduino Programming: Conditionals, Arduino Programming: Loops</p>
 	            
 	          </div>
 
 
 		          <div class="two-column">
 		            <p>
-              INTRODUCTION TO MICROCONTROLLERS<br/><br/>
+              ARDUINO PROGRAMMING: CONDITIONALS<br/><br/>
 
-              Today's class was started off by Nathan with a lecture regarding microcontrollers. Over the course of time, I learnt that a microconntroller is going to be an imperative part of my final project. Any gadget or equippment that does things like measuring, controlling, displaying and calculating values usually contains a microcontroller. The most important commponent of a microcontroller is the Central Processing Unit, with a word length ranging from 4-bit to 64-bit. Most microcontrollers (including Arduino) can input and output analog signals as well as digital signals. <br/>
-              An analog signal is one that can take on any number of values, unlike a digital signal which has only two values: HIGH and LOW. <a href="https://nathanmelenbrink.github.io/intro-dig-fab/03_electronics/micro.html">Here</a> is a link to the page on Microcontrollers.
+              Today, we were playing with more circuits and I was super excited as we were going to work with buttons and LEDs. <a href="https://nathanmelenbrink.github.io/intro-dig-fab/05_electronics/conditionals.html">Here </a>is a link to the tutorial  page on Conditional Statements and Pullup Resistors. I started by gathering my materials for the workshop. I followed all tutorials carefully and I got comfortable working with buttons. With the help about this tutorial, I also learnt about logical operators.
               <br/><br/>
                
-              ELECTRONICS AND TEST EQUIPPMENT<br/><br/>
+              ARDUINO PROGRAMMING: LOOPS<br/><br/>
                
-              <a href="https://roberthart56.github.io/SCFAB/SC_lab/Electronics/electronics_basics/electronic_basics.html">Here</a> is a link to the page on Electronics Basics.<br/>
-              This reading focussed on various components of a circuit and the application of a multimeter in reference to that component. After the given table, the reading talks  about voltage, voltage dividers, the use of a multimeter and a breadboard and how to measure current using Ohm's law. 
+              <a href="https://nathanmelenbrink.github.io/intro-dig-fab/05_electronics/loops.html">Here </a> is a link to Nathan's tutorial on for() loops. With the help of this tutorial, I also learnt the application of a nested for() loop, which actually came pretty handy while doing this week's assignment.
               <br/><br/>
 
-              I started off by making a simple LED circuit. Building this circuit was not very challenging for me. We had a lot fo resistors but I used a 470 ohm resistor which worked perfectly well. Here is the Arduino code I used: <br/><br/>
+              I decided to make a circuit with 2 LEDs and two buttons. I also used 4 1K resistors to control the voltage but I did not want to make it straightforward. I made my program such that one LED is at HIGH when the button is not pressed and is at LOW when the button is pressed. It works the other way around with the second LED. Here is my Arduino Code: <br/><br/>
               <pre>
-<font color="#00979c">int</font> <font color="#000000">led</font> <font color="#434f54">=</font> <font color="#000000">13</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; the pin the LED is connected to</font>
-<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">led</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font> <font color="#434f54">&#47;&#47; Declare the LED as an output</font>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">BUTTON1</font> <font color="#434f54">=</font> <font color="#000000">2</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">BUTTON2</font> <font color="#434f54">=</font> <font color="#000000">4</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">LED1</font> <font color="#434f54">=</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">LED2</font> <font color="#434f54">=</font> <font color="#000000">12</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#000000">BUTTONstate1</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#000000">BUTTONstate2</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">BUTTON1</font><font color="#434f54">,</font> <font color="#00979c">INPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">BUTTON2</font><font color="#434f54">,</font> <font color="#00979c">INPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">LED1</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">LED2</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
 <font color="#000000">}</font>
 
-<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">led</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font> <font color="#434f54">&#47;&#47; Turn the LED on</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#000000">BUTTONstate1</font> <font color="#434f54">=</font> <font color="#d35400">digitalRead</font><font color="#000000">(</font><font color="#000000">BUTTON1</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">BUTTONstate1</font> <font color="#434f54">==</font> <font color="#00979c">HIGH</font><font color="#000000">)</font>
+ &nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LED1</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font> 
+ &nbsp;<font color="#5e6d03">else</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LED1</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#000000">BUTTONstate2</font> <font color="#434f54">=</font> <font color="#d35400">digitalRead</font><font color="#000000">(</font><font color="#000000">BUTTON2</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">BUTTONstate2</font> <font color="#434f54">==</font> <font color="#00979c">HIGH</font><font color="#000000">)</font>
+ &nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LED2</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font> 
+ &nbsp;<font color="#5e6d03">else</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LED2</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
 <font color="#000000">}</font>
 
 </pre>
-<br/><br/>
-<img src="img/20200723_022452.jpg" alt="Simple LED Circut" width="550" height="550">
-            		            <br/><br/>
-                            Following is my TinkerCAD Diagram for this circuit:<br/><br/>
-                            <img src="img/Screenshot (297).png" alt="Simple LED Circut" width="700" height="450"><br/><br/>
+             <br/><br/>
 
-                            After this, we were to make a circuit for the "blink" program. This is the code I used:<br/><br/>
-                            <pre>
-<font color="#95a5a6">&#47;*</font>
-<font color="#95a5a6"> &nbsp;Blink</font>
-<font color="#95a5a6"> &nbsp;Turns on an LED on for one second, then off for one second, repeatedly.</font>
-<font color="#95a5a6"> </font>
-<font color="#95a5a6"> &nbsp;Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO </font>
-<font color="#95a5a6"> &nbsp;it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to</font>
-<font color="#95a5a6"> &nbsp;the correct LED pin independent of which board is used.</font>
-<font color="#95a5a6"> &nbsp;If you want to know what pin the on-board LED is connected to on your Arduino model, check</font>
-<font color="#95a5a6"> &nbsp;the Technical Specs of your board &nbsp;at </font><u><font color="#95a5a6">https:&#47;&#47;www.arduino.cc&#47;en&#47;Main&#47;Products</font></u><font color="#95a5a6"></font>
-<font color="#95a5a6"> &nbsp;</font>
-<font color="#95a5a6"> &nbsp;This example code is in the public domain.</font>
-<font color="#95a5a6"> </font>
-<font color="#95a5a6"> &nbsp;modified 8 May 2014</font>
-<font color="#95a5a6"> &nbsp;by Scott Fitzgerald</font>
-<font color="#95a5a6"> &nbsp;</font>
-<font color="#95a5a6"> &nbsp;modified 2 Sep 2016</font>
-<font color="#95a5a6"> &nbsp;by Arturo Guadalupi</font>
-<font color="#95a5a6"> &nbsp;</font>
-<font color="#95a5a6"> &nbsp;modified 8 Sep 2016</font>
-<font color="#95a5a6"> &nbsp;by Colby Newman</font>
-<font color="#95a5a6">*&#47;</font>
- 
- 
-<font color="#434f54">&#47;&#47; the setup function runs once when you press reset or power the board</font>
-<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#434f54">&#47;&#47; initialize digital pin LED_BUILTIN as an output.</font>
- &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
-<font color="#000000">}</font>
- 
-<font color="#434f54">&#47;&#47; the loop function runs over and over again forever</font>
-<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED on (HIGH is the voltage level)</font>
- &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
- &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#00979c">LED_BUILTIN</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; turn the LED off by making the voltage LOW</font>
- &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;
- &nbsp;<font color="#434f54">&#47;&#47; wait for a second</font>
- &nbsp;
-<font color="#000000">}</font>
-
-</pre><br/><br/>
+             Here is a video of my result:
 <video width="560" height="450" controls>
-  <source src="img/20200724_034400.mp4" type="video/mp4">
+  <source src="img/buttons.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video><br/><br/>
-On playing around with the code a little bit, I figured out that I can change the delay time of the blink. I can also aadjust the brightness of the LED by including the following line in the void loop:<br/><br/>
-<pre>
-<font color="#d35400">analogWrite</font> <font color="#000000">(</font><font color="#000000">9</font><font color="#434f54">,</font><font color="#000000">230</font><font color="#000000">)</font><font color="#000000">;</font>
 
-
-</pre><br/><br/> The value in place of "230" could range from 0 to 255 in increasing order of brightness. At this point, it is also important to shift the wire to Pin 9 on the MetroBoard.
-		            
 		            </p>
 		          </div> 
               <h1>Readings & Documentation</h1>
