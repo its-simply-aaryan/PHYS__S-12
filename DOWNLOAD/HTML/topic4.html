@@ -132,38 +132,81 @@ This lecture focussed on tools and safety measures required while making quick p
               <br/> <br/>
               <div class="one-column">
             
-              <h1>Autodesk Fusion 360</h1>
-              <p>Introduction to Autodesk Fusion 360, Assignment</p>
+              <h1>Rapid Prototyping</h1>
+              <p>Weekly Assignment</p>
               
             </div>
 
             <div class="two-column">
                 <p>
-              INTRODUCTION TO AUTODESK FUSION 360<br/><br/>
-
-              I began by downloading the <b>Autodesk Fusion 360</b> software. The downloading process was not difficult and I got a student's liscence for free. My software was not opening at the beginning but it worked after I rebooted my computer system.  I began by experimenting with Fusion: Very archetypal of me to jump right into it; but there were layers I could not resolve. Therefore, I started with the tutorial on the course website which helped me get familiar with Fusion tools. The first tutorial helped me sketch in 2D, extrude surfaces and export DXF files.
-              <br/><br/>
-               
               WEEKLY ASSIGNMENT<br/><br/>
+
+              This week our assignment had a choice: We could either make a quick prototype of our final project or we could make a kinetic sculpture. I decided I wanted  to make a prototype of my final project which was a robot cleaning machine. I had Planned my machine to be a disc shaped structure and here is the schematic I proposed: <br/><br/>
+              <br/><br/>
+              <img src="img/cardesign.jpg" alt="Simple LED Circut" width="700" height="450"><br/><br/>
+              The first obstacle I had to overcome was to get my structure moving using two dc motors. I tried to run both dc motors using one motor driver but for some reason it did not work. I switched to using two motor drivers but even then, only one motor would work. Here is my Arduino code:<br/><br/>
+              <pre>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">A1A</font> <font color="#434f54">=</font> <font color="#000000">8</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; define pin 8 for A-1A</font>
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">A1B</font> <font color="#434f54">=</font> <font color="#000000">9</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; define pin 9 for A-1B</font>
+
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">B1A</font> <font color="#434f54">=</font> <font color="#000000">10</font><font color="#000000">;</font> 
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">B1B</font> <font color="#434f54">=</font> <font color="#000000">11</font><font color="#000000">;</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">A1A</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; specify these pins as outputs</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">A1B</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">B1A</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">B1B</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+
+ &nbsp;<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">motorA</font><font color="#000000">(</font><font color="#00979c">&#39;R&#39;</font><font color="#434f54">,</font> <font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">motorB</font><font color="#000000">(</font><font color="#00979c">&#39;R&#39;</font><font color="#434f54">,</font> <font color="#000000">1000</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+
+
+<font color="#00979c">void</font> <font color="#000000">motorA</font><font color="#000000">(</font><font color="#00979c">char</font> <font color="#000000">d</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">t</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">d</font> <font color="#434f54">==</font> <font color="#00979c">&#39;R&#39;</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1A</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1B</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">d</font> <font color="#434f54">==</font><font color="#00979c">&#39;L&#39;</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1A</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1B</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;
+ &nbsp;<font color="#000000">}</font>
+
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">t</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; allow motor to run for specified time</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1A</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; turn motor OFF</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">A1B</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+
+<font color="#00979c">void</font> <font color="#000000">motorB</font><font color="#000000">(</font><font color="#00979c">char</font> <font color="#000000">d</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">t</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">d</font> <font color="#434f54">==</font> <font color="#00979c">&#39;R&#39;</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1A</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1B</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+
+ &nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">d</font> <font color="#434f54">==</font><font color="#00979c">&#39;L&#39;</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1A</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1B</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;
+ &nbsp;<font color="#000000">}</font>
+
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">t</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; allow motor to run for specified time</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1A</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; turn motor OFF</font>
+ &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">B1B</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+
+ &nbsp;<font color="#000000">}</font>
+
+
+</pre><br/><br/> My prototype  eventually failed but here is a video of what I got: <br/><br/>
                
-              Our assignment for the week was to work through a fusion 360 tutorial and document our learning. The following are the video tutorials I used along with my learning from each of these tutorials.
-              <br/><br/> 
-
-             
-
-            <iframe width="700" height="450" src="https://www.youtube.com/embed/vVFYrBClkPc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              
-                <br/><br/>
-                This tutorial helped me change the standard units for all constructions, sketching different kinds of objects and more importantly using siple tools such as - trim, mirror, tanget and dimensions.
-               <br/><br/>
-
-               After this, I used the <a href="https://help.autodesk.com/view/fusion360/ENU/courses/AP-GET-STARTED-OVERVIEW">video lessons</a> provided by Autodesk to explore Fusion 360 further. These lessons were divided into 16 short video lessons. <br/>
-               The first video was a brief overview of the capabilities of Fusion 360 - including design, prototyping, animations, renderings and all possibilities along with it.
-
-               <br/><br/>
-
-              The second part of our assignment was to select atleast three components from the kit, measure them using callipers and model them in Fusion 360. We were to create an assembly of these components and document our work on this webpage. I unfortunately have not received my kit yet, which is why I have not modelled the components but I will have it done as soon as I receive my  kit.              
-                <br/><br/>
+              <video width="560" height="450" controls>
+  <source src="img/rapidprototype.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video><br/><br/>
               </div> </p>
                  				  
                 <div class="clear"></div>   				  
@@ -173,13 +216,7 @@ This lecture focussed on tools and safety measures required while making quick p
             </div>
  
 				        
-				        <img src="img/full/1.jpg" width="100%"><br/><br/><br/><br/>
-				        <img src="img/full/2.jpg" width="100%"><br/><br/><br/><br/>
-				        <img src="img/full/3.jpg" width="100%"><br/><br/><br/><br/>
-				        <img src="img/full/4.jpg" width="100%"><br/><br/><br/><br/>
-				        <img src="img/full/5.jpg" width="100%"><br/><br/><br/><br/>
-				        <img src="img/full/6.jpg" width="100%">
-        
+				       
         `
 					        
         
